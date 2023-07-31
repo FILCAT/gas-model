@@ -15,7 +15,7 @@ jq -s '
   map(reduce .[] as $item ({}; .To = $item.To | .Height = $item.Height | .Gas += $item.Gas))
 ' "${dir}"crongas-"$1".json  "${dir}"crontime-"$1".json > "${dir}"cronsummary-"$1".json
 
-(cat "${dir}"cronsummary-"$1".json | ./lotus-shed cron-wc deadline-summary; cat "${dir}"cronsummary-"$1".json) | jq -s '.' | jq 'transpose | .[] | .[0] + .[1]' > "${dir}"output-"$1".json
+(cat "${dir}"cronsummary-"$1".json | ./lotus-shed cron-wc deadline-summary; cat "${dir}"cronsummary-"$1".json) | jq -s '.' | jq 'transpose | .[] | .[0] + .[1]' | jq -s '.' > "${dir}"output-"$1".json
 
 # remove intermediates
 rm "${dir}"/crongas-"$1".json
